@@ -18,8 +18,17 @@ function evm(code) {
   while (pc < code.length) {
     const opcode = code[pc];
     pc++;
-
+    const hexOpcode = `0x${opcode.toString(16).padStart(2, '0')}`
     // TODO: implement the EVM here!
+    console.log(hexOpcode)
+    if(hexOpcode == "0x00") {
+      return { success: true, stack }
+    } else if (hexOpcode == '0x60') {
+      stack.unshift(code[pc])
+      pc++
+    } else if (opcode == '0x50') {
+      stack.shift()
+    }
   }
 
   return { success: true, stack };
